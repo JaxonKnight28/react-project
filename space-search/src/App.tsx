@@ -1,11 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './styles/App.css';
+import { PhotoOfTheDay } from './views/public/photoOfTheDay.view';
+import { Routes, Route, Link } from 'react-router-dom'
+import { Icon, Menu } from 'semantic-ui-react';
+import { SearchPage } from './views/public/search.view';
+import { HomePage } from './views/public/home.view';
 
 
 function App() {
   return (
-    <div>This is a test</div>
+    <div>
+      <header>
+        <Menu>
+          <Menu.Menu>
+            <Menu.Item>
+              <Link to="/"><Icon name="home" />Home</Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to="/search"><Icon name="search" />Search</Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to="/photo-of-the-day"><Icon name="photo" />Photo of the day</Link>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      </header>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/photo-of-the-day' element={<PhotoOfTheDay />} />
+        <Route path="/search" element={<SearchPage />} />
+      </Routes>
+    </div>
   )
 }
 
