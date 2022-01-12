@@ -4,6 +4,7 @@ import { Routes, Route, Link } from 'react-router-dom'
 import { Icon, Menu } from 'semantic-ui-react';
 import { SearchPage } from './views/public/search.view';
 import { HomePage } from './views/public/home.view';
+import { EpicPhotoSearch } from './views/public/EPIC.view';
 
 
 function App() {
@@ -21,11 +22,15 @@ function App() {
             <Menu.Item>
               <Link to="/photo-of-the-day"><Icon name="photo" />Photo of the day</Link>
             </Menu.Item>
+            <Menu.Item>
+              <Link to="/epic"><Icon name='camera' />EPIC</Link>
+            </Menu.Item>
           </Menu.Menu>
         </Menu>
       </header>
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route path='/epic' element={<EpicPhotoSearch />} />
         <Route path='/photo-of-the-day' element={<PhotoOfTheDay />} />
         <Route path="/search" element={<SearchPage />} />
       </Routes>
