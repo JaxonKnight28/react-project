@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import { Container } from 'semantic-ui-react'
 
-interface Dictionary<T> {
-    [id: string]: T;
-}
 
 // api key: zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc
 export function PhotoOfTheDay() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [data, setItems] = useState([]);
+    const [data, setItems] = useState<any>([]);
 
     // Note: the empty deps array [] means
     // this useEffect will run once
@@ -44,18 +41,10 @@ export function PhotoOfTheDay() {
                 <h3>NASA has an API called APOD (Astronomy Picture of the Day)</h3>
                 <h3>Each day there is a new photo from NASA related to Astronomy along with a description of what the picture is.</h3>
 
-                {/* {data.map((item, index) => (
-                    <Container key={index}>
-                        <div className="ui divider"></div>
-                        <h1>{data['title']}</h1>
-                        <img src={data['url']} alt="" />
-                        <p>{data['explanation']}</p>
-                    </Container>
-                ))} */}
-                {/* <div className="ui divider"></div>
-                <h1>{data[title]}</h1>
-                <img src={data['url']} alt="" />
-                <p>{data['explanation']}</p> */}
+                <div className="ui divider"></div>
+                <h1>{data.title}</h1>
+                <img src={data.url} alt="" />
+                <p>{data.explanation}</p>
             </Container>
 
         );
