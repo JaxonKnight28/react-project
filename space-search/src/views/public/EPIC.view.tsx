@@ -33,7 +33,7 @@ export function EpicPhotoSearch() {
     } else if (!isLoaded) {
         return <Container textAlign="center"><div>Loading...</div></Container>;
     } else {
-        ///console.log(data)
+        console.log(data)
         return (
             <Container textAlign="center">
                 {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}

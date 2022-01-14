@@ -44,7 +44,9 @@ export function PhotoOfTheDay() {
                 <div className="ui divider"></div>
                 <h1>{data.title}</h1>
                 <img src={data.url} alt="" />
+                <div className="ui hidden divider"></div>
                 <p>{data.explanation}</p>
+                <div className="ui hidden divider"></div>
             </Container>
 
         );

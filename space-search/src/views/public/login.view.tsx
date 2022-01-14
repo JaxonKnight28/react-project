@@ -16,6 +16,7 @@ export function LoginView() {
         users.forEach(user => {
             if (user.username === username && user.password === password) {
                 console.log('did it');
+                window.localStorage.setItem('space-user', JSON.stringify(user))
                 navigate('/')
             }
         });

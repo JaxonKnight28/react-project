@@ -11,7 +11,7 @@ interface photos {
     photos?: {};
 }
 
-export function SearchPage() {
+export function Rovers() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState<any>([]);
@@ -20,7 +20,7 @@ export function SearchPage() {
     // this useEffect will run once
     // similar to componentDidMount()
     useEffect(() => {
-        fetch("https://images-api.nasa.gov/search?q=space")
+        fetch("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2022-1-12&api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -43,18 +43,16 @@ export function SearchPage() {
         return <div>Loading...</div>;
     } else {
 
-        console.log(items.collection.items);
-
-        const arr = Object.assign([], items.collection.items)
+        const arr = Object.assign([], items.photos)
         console.log('arr', arr);
 
         return (
             <Container>
                 {/* <pre>{JSON.stringify(items.photos, null, 2)}</pre> */}
 
-                {/* {arr.map((item: any) => (
+                {arr.map((item: any) => (
                     <Image key={item.id} src={item.img_src} />
-                ))} */}
+                ))}
             </Container >
         );
     }
