@@ -1,35 +1,27 @@
-// https://images-api.nasa.gov/search?q=space
 //https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc
 
 import { useEffect, useState } from "react";
 import { Container, Image } from "semantic-ui-react";
-import { JsonObjectExpression } from "typescript";
 
 
-interface photos {
-    items: {};
-    photos?: {};
-}
-
-export function Rovers() {
+export function Rovers(props: any) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState<any>([]);
 
-    // Note: the empty deps array [] means
-    // this useEffect will run once
-    // similar to componentDidMount()
+    const year = props.data.year
+    const month = props.data.month
+    const day = props.data.day
+    const rover = props.data.rover
+
     useEffect(() => {
-        fetch("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2022-1-12&api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc")
+        fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?earth_date=${year}-${month}-${day}&api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc`)
             .then(res => res.json())
             .then(
                 (result) => {
                     setIsLoaded(true);
                     setItems(result);
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     setIsLoaded(true);
                     setError(error);
@@ -44,11 +36,14 @@ export function Rovers() {
     } else {
 
         const arr = Object.assign([], items.photos)
-        console.log('arr', arr);
+        const len = arr.length
 
         return (
-            <Container>
+            <Container style={{ margin: 40 }} textAlign="center" fluid>
                 {/* <pre>{JSON.stringify(items.photos, null, 2)}</pre> */}
+                <Container>
+                    <h3>There are {len} photos(s) from Rover: {rover} on {month}-{day}-{year} (mm-dd-yyy)</h3>
+                </Container>
 
                 {arr.map((item: any) => (
                     <Image key={item.id} src={item.img_src} />

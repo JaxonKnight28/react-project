@@ -6,7 +6,7 @@ import { SearchPage } from './views/public/search.view';
 import { HomePage } from './views/public/home.view';
 import { EpicPhotoSearch } from './views/public/EPIC.view';
 import { LoginView } from './views/public/login.view';
-import { Rovers } from './views/public/rovers.view';
+import { SearchRover } from './views/public/searchRover.view';
 
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<LoginView />} />
-        <Route path='/rover' element={<Rovers />} />
+        <Route path='/rover' element={<SearchRover />} />
         <Route path='/epic' element={<EpicPhotoSearch />} />
         <Route path='/photo-of-the-day' element={<PhotoOfTheDay />} />
         <Route path="/search" element={<SearchPage />} />
