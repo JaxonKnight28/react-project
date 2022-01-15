@@ -10,15 +10,10 @@ export type SearchFormValues = {
     rover?: string;
 }
 
-function Test(props: any) {
-    return <pre>TEST: {JSON.stringify(props.name, null, 2)}</pre>
-}
-
 export function SearchRover() {
     const [searchData, setSearchData] = useState<SearchFormValues>({})
     const [newData, setNewData] = useState<boolean>(false)
     const handleSubmit = () => {
-        //console.log(searchData);
         setNewData(true)
 
     }

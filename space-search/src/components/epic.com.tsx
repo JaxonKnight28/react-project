@@ -6,20 +6,19 @@ export function EpicGetter(params: any) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setItems] = useState<any>([]);
 
-    // Note: the empty deps array [] means
-    // this useEffect will run once
-    // similar to componentDidMount()
+    const year = params.data.year
+    const month = params.data.month
+    const day = params.data.day
+    const quality = params.data.quality
+
     useEffect(() => {
-        fetch("https://epic.gsfc.nasa.gov/api/enhanced/date/2019-05-30?api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc")
+        fetch(`https://epic.gsfc.nasa.gov/api/${quality}/date/${year}-${month}-${day}?api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc`)
             .then(res => res.json())
             .then(
                 (result) => {
                     setIsLoaded(true);
                     setItems(result);
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     setIsLoaded(true);
                     setError(error);
@@ -32,19 +31,16 @@ export function EpicGetter(params: any) {
     } else if (!isLoaded) {
         return <Container textAlign="center"><div>Loading...</div></Container>;
     } else {
-        console.log(data)
 
         const arr = Object.assign([], data)
         const len = arr.length
 
         return (
             <Container textAlign="center">
-                {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-                <h1>These are images taken from DSCOVR's Earth Polychromatic Imaging Camera (EPIC) instrument</h1>
+                <h4>{len} photo(s) from {month}-{day}-{year} (mm-dd-yyy)</h4>
                 <Container>
                     {arr.map((item: any) => (
-                        <Image key={item.identifier} src={`https://api.nasa.gov/EPIC/archive/enhanced/2019/05/30/png/${item.image}.png?api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc`} />
-                        // <div>{item.identifier}</div>
+                        <Image key={item.identifier} src={`https://api.nasa.gov/EPIC/archive/${quality}/${year}/${month}/${day}/png/${item.image}.png?api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc`} />
                     ))}
                 </Container>
             </Container>

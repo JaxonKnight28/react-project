@@ -1,5 +1,3 @@
-//https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc
-
 import { useEffect, useState } from "react";
 import { Container, Image } from "semantic-ui-react";
 
@@ -40,7 +38,6 @@ export function Rovers(props: any) {
 
         return (
             <Container style={{ margin: 40 }} textAlign="center" fluid>
-                {/* <pre>{JSON.stringify(items.photos, null, 2)}</pre> */}
                 <Container>
                     <h3>There are {len} photos(s) from Rover: {rover} on {month}-{day}-{year} (mm-dd-yyy)</h3>
                 </Container>

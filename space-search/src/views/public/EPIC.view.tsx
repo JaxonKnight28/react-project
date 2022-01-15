@@ -1,56 +1,67 @@
-import { useState, useEffect } from "react";
-import { Container, Menu, Image } from 'semantic-ui-react'
+import { useState } from "react";
+import { Container, Form, Button } from 'semantic-ui-react'
 import { EpicGetter } from "../../components/epic.com";
 
-// api key: zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc
-export function EpicPhotoSearch2() {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [data, setItems] = useState([]);
 
-    // Note: the empty deps array [] means
-    // this useEffect will run once
-    // similar to componentDidMount()
-    useEffect(() => {
-        fetch("https://epic.gsfc.nasa.gov/api/enhanced/date/2015-10-31?api_key=zXuu0a69xd8M3vyEJWURzxgSKDETAoioniuWN2pc")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setItems(result);
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
-    }, [])
 
-    if (error) {
-        return <div>Error: {error['message']}</div>;
-    } else if (!isLoaded) {
-        return <Container textAlign="center"><div>Loading...</div></Container>;
-    } else {
-        console.log(data)
-        return (
-            <Container textAlign="center">
-                {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-                <h1>These are images taken from DSCOVR's Earth Polychromatic Imaging Camera (EPIC) instrument</h1>
-                <Container>
-                    {data.map((item, index) => (
-                        <Image key={item['identifier']} src={`https://epic.gsfc.nasa.gov/archive/enhanced/2015/10/31/png/${item['image']}.png`} fluid />
-                    ))}
-                </Container>
-            </Container>
-
-        );
-    }
+type SearchFormValues = {
+    year?: string;
+    month?: string;
+    day?: string;
+    rover?: string;
 }
+
 export function EpicPhotoSearch() {
+    const [searchData, setSearchData] = useState<SearchFormValues>({})
+    const [newData, setNewData] = useState<boolean>(false)
+    const handleSubmit = () => {
+        setNewData(true)
+
+    }
+
+    const handleChange = ({ target: { value, name } }: any) => {
+        setSearchData({ ...searchData, [name]: value })
+        setNewData(false)
+    }
     return (
-        <EpicGetter />
+        <Container>
+            <h1>These are images taken from DSCOVR's Earth Polychromatic Imaging Camera (EPIC) instrument</h1>
+            <Form onSubmit={handleSubmit}>
+                <Form.Field>
+                    <label>Year</label>
+                    <input placeholder="Year" name="year" onChange={handleChange} />
+                </Form.Field>
+                <Form.Field>
+                    <label>Month ex:(01) for January</label>
+                    <input placeholder="Month" name="month" onChange={handleChange} />
+                </Form.Field>
+                <Form.Field>
+                    <label>Day (01)</label>
+                    <input placeholder="Day" name="day" onChange={handleChange} />
+                </Form.Field>
+                <Form.Field>
+                    <Form.Group grouped onChange={handleChange}>
+                        <label>Quality</label>
+                        <Form.Field
+                            label='Enhanced'
+                            control='input'
+                            type='radio'
+                            name='quality'
+                            value='enhanced'
+                        />
+                        <Form.Field
+                            label='Natural'
+                            control='input'
+                            type='radio'
+                            name='quality'
+                            value='natural'
+                        />
+                    </Form.Group>
+                </Form.Field>
+
+                <Button type="submit">Search</Button>
+            </Form>
+            {newData && <EpicGetter data={searchData} />}
+        </Container>
     )
 }
